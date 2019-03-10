@@ -1,0 +1,42 @@
+{
+  "name": "dankyou",
+  "version": "0.0.1",
+  "description": "WIP",
+  "keywords": [
+    "flowchart",
+    "iterator"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "test": "jest --config jest.config.json",
+    "test:ci": "jest --config jest.config.json --ci --coverage && cat ./coverage/lcov.info | coveralls",
+    "lint": "tslint --fix -p tsconfig.json",
+    "build": "rimraf dist && tsc --build",
+    "preversion": "npm run lint && npm run test",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags"
+  },
+  "author": "https://github.com/briwa",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "24.0.6",
+    "coveralls": "3.0.3",
+    "jest": "24.3.0",
+    "rimraf": "2.6.3",
+    "ts-jest": "24.0.0",
+    "tslint": "5.13.0",
+    "tslint-config-standard": "8.0.1",
+    "typescript": "3.3.3333"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/briwa/dankyou.git"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}
