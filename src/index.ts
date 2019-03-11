@@ -17,34 +17,41 @@ interface Input {
   edges: GraphEdge[]
 }
 
+interface CurrentNode {
+  node: GraphNode
+  edges: GraphEdge[]
+}
+
 export default class DankYou {
   constructor (input: Input) {
-    this.iterator = this.createIterator(input)
+    this.iterable = this.createIterator(input)
 
     return this
   }
 
   private currentNode!: GraphNode
-  private iterator!: IterableIterator<GraphNode>
+  private iterable!: Iterator<CurrentNode>
   private nextNodeId: number = 0
   private end: boolean = false
 
   /**
    * Get the next node
    * @param answer - The answer to the next node. Only applies to question-type node for now.
+   * @returns The value of the next node and edges (if exists) in a form of `IteratorResult`
    */
-  public next (answer?: string) {
-    return this.iterator.next(answer)
+  public next (answer?: string): IteratorResult<CurrentNode> {
+    return this.iterable.next(answer)
   }
   /**
    * Create the iterator for the nodes
    * @param input - The graph-like input.
+   * @yields The next node and edges, if any
    */
   private *createIterator (input: Input) {
     this.nextNodeId = input.root
 
     while (!this.end) {
-      const currentNode = input.nodes.find((node: GraphNode) => this.nextNodeId === node.id) || null
+      const currentNode = input.nodes.find((node: GraphNode) => this.nextNodeId === node.id)
       if (!currentNode) {
         throw new Error(`Node with id: ${this.nextNodeId} cannot be found.`)
       }
@@ -52,10 +59,11 @@ export default class DankYou {
       this.currentNode = currentNode
 
       // Find the nearest text/question, since we should not iterate through the other answers
-      const nextNode = input.nodes.find((node: GraphNode) => node.id > this.nextNodeId && node.type !== 'answer') || null
+      const nextNode = input.nodes.find((node) => node.id > this.nextNodeId && node.type !== 'answer')
+      const nextEdges = this.currentNode.type === 'question' ? input.edges.filter((edge) => edge.from === this.nextNodeId) : []
       this.end = !nextNode
 
-      const answer = yield this.currentNode
+      const answer: string | undefined = yield { node: this.currentNode, edges: nextEdges }
 
       switch (this.currentNode.type) {
         case 'question': {
@@ -63,7 +71,7 @@ export default class DankYou {
             throw new Error('Empty answer is not allowed.')
           }
 
-          const answerEdge = input.edges.find((node: GraphEdge) => node.from === this.nextNodeId && node.text === answer)
+          const answerEdge = nextEdges.find((node: GraphEdge) => node.text === answer)
           if (!answerEdge) {
             throw new Error(`No answer found for id: ${this.nextNodeId} and answer: ${answer}.`)
           }
