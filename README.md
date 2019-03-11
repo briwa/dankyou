@@ -40,19 +40,19 @@ import DankYou from 'dankyou'
 const dankyou = new DankYou(input)
 
 dankyou.next()
-// { value: { id: 1, text: 'First', type: 'text' }, done: false }
+// { value: { node: { id: 1, text: 'First', type: 'text' }, edges: [] }, done: false }
 
 dankyou.next()
-// { value: { id: 2, text: 'Second', type: 'text' }, done: false }
+// { value: { node: { id: 2, text: 'Second', type: 'text' }, edges: [] }, done: false }
 
 dankyou.next()
-// { value: { id: 3, text: 'Third?', type: 'question' }, done: false }
+// { value: { node: { id: 3, text: 'Third?', type: 'question' }, edges: [{ from: 3, to: 4, text: 'No' }, { from: 3, to: 5, text: 'Yes' }] }, done: false }
 
 dankyou.next('Yes')
-// { value: { id: 5, text: 'You said Yes', type: 'answer' }, done: false }
+// { value: { node: { id: 5, text: 'You said Yes', type: 'answer' }, edges: [] }, done: false }
 
 dankyou.next()
-// { value: { id: 6, text: 'Very well, bye', type: 'text' }, done: true }
+// { value: { node: { id: 1, text: 'Very well, bye', type: 'text' }, edges: [] }, done: true }
 ```
 
 ## Test
