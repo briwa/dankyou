@@ -1,27 +1,8 @@
-// TODO: move this to a definition file
-interface GraphNode {
-  id: number
-  type: string
-  text: string
-}
+import { Input, GraphNode, GraphEdge, CurrentNode } from './types'
 
-interface GraphEdge {
-  from: number
-  to: number
-  text: string
-}
-
-interface Input {
-  root: number
-  nodes: GraphNode[]
-  edges: GraphEdge[]
-}
-
-interface CurrentNode {
-  node: GraphNode
-  edges: GraphEdge[]
-}
-
+/**
+ * Simple helper to iterate through a graph-like data structure. For now, the usage is focusing only on flowcharts
+ */
 export default class DankYou {
   constructor (input: Input) {
     this.iterable = this.createIterator(input)
@@ -31,7 +12,7 @@ export default class DankYou {
 
   private currentNode!: GraphNode
   private iterable!: Iterator<CurrentNode>
-  private nextNodeId: number = 0
+  private pointer: number = 0
   private end: boolean = false
 
   /**
@@ -47,20 +28,20 @@ export default class DankYou {
    * @param input - The graph-like input.
    * @yields The next node and edges, if any
    */
-  private *createIterator (input: Input) {
-    this.nextNodeId = input.root
+  private *createIterator (input: Input): IterableIterator<CurrentNode> {
+    this.pointer = input.root
 
     while (!this.end) {
-      const currentNode = input.nodes.find((node: GraphNode) => this.nextNodeId === node.id)
+      const currentNode = input.nodes.find((node: GraphNode) => this.pointer === node.id)
       if (!currentNode) {
-        throw new Error(`Node with id: ${this.nextNodeId} cannot be found.`)
+        throw new Error(`Node with id: ${this.pointer} cannot be found.`)
       }
 
       this.currentNode = currentNode
 
       // Find the nearest text/question, since we should not iterate through the other answers
-      const nextNode = input.nodes.find((node) => node.id > this.nextNodeId && node.type !== 'answer')
-      const nextEdges = this.currentNode.type === 'question' ? input.edges.filter((edge) => edge.from === this.nextNodeId) : []
+      const nextNode = input.nodes.find((node) => node.id > this.pointer && node.type !== 'answer')
+      const nextEdges = this.currentNode.type === 'question' ? input.edges.filter((edge) => edge.from === this.pointer) : []
       this.end = !nextNode
 
       const answer: string | undefined = yield { node: this.currentNode, edges: nextEdges }
@@ -73,16 +54,16 @@ export default class DankYou {
 
           const answerEdge = nextEdges.find((node: GraphEdge) => node.text === answer)
           if (!answerEdge) {
-            throw new Error(`No answer found for id: ${this.nextNodeId} and answer: ${answer}.`)
+            throw new Error(`No answer found for id: ${this.pointer} and answer: ${answer}.`)
           }
 
-          this.nextNodeId = answerEdge.to
+          this.pointer = answerEdge.to
 
           break
         }
         default: {
           if (nextNode) {
-            this.nextNodeId = nextNode.id
+            this.pointer = nextNode.id
           }
 
           break
