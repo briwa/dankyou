@@ -4,7 +4,8 @@
   "description": "WIP",
   "keywords": [
     "flowchart",
-    "iterator"
+    "iterator",
+    "typescript"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
