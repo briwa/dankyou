@@ -15,6 +15,7 @@
   "scripts": {
     "test": "jest --config jest.config.json",
     "test:ci": "jest --config jest.config.json --ci --coverage && cat ./coverage/lcov.info | coveralls",
+    "docs": "typedoc src",
     "lint": "tslint --fix -p tsconfig.json",
     "build": "rimraf dist && tsc --build",
     "preversion": "npm run lint && npm run test",
@@ -31,6 +32,7 @@
     "ts-jest": "24.0.0",
     "tslint": "5.13.0",
     "tslint-config-standard": "8.0.1",
+    "typedoc": "0.14.2",
     "typescript": "3.3.3333"
   },
   "repository": {
