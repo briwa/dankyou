@@ -1,6 +1,6 @@
 # DankYou
 [![npm](https://img.shields.io/npm/v/dankyou.svg)](https://www.npmjs.com/package/dankyou)
-[![Build Status](https://travis-ci.org/briwa/dankyou.svg?branch=master)](https://travis-ci.org/briwa/dankyou)
+[![Build Status](https://travis-ci.com/briwa/dankyou.svg?branch=master)](https://travis-ci.com/briwa/dankyou)
 [![Coverage Status](https://coveralls.io/repos/github/briwa/dankyou/badge.svg?branch=master)](https://coveralls.io/github/briwa/dankyou?branch=master)
 
 
