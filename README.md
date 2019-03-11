@@ -34,7 +34,7 @@ const input = {
 }
 ```
 
-You can iterate through the nodes. Supports node edges as well. It is using a generator function under the hood.
+It can iterate through the nodes. It is wrapping an iterator under the hood.
 ```javascript
 import DankYou from 'dankyou'
 const dankyou = new DankYou(input)
@@ -46,7 +46,7 @@ dankyou.next()
 // { value: { id: 2, text: 'Second', type: 'text' }, done: false }
 
 dankyou.next()
-// { value: { id: 3, text: 'Third', type: 'question' }, done: false }
+// { value: { id: 3, text: 'Third?', type: 'question' }, done: false }
 
 dankyou.next('Yes')
 // { value: { id: 5, text: 'You said Yes', type: 'answer' }, done: false }
