@@ -24,30 +24,32 @@ export default class DankYou {
     return this
   }
 
+  private currentNode!: GraphNode
+  private iterator!: IterableIterator<GraphNode>
   private nextNodeId: number = 0
-  // TODO: We should not need this null thing
-  private currentNode: GraphNode | null = null
-  private iterator: IterableIterator<GraphNode>
   private end: boolean = false
 
   /**
    * Get the next node
-   * @param answer - supply the answer to the next node if any
+   * @param answer - The answer to the next node. Only applies to question-type node for now.
    */
   public next (answer?: string) {
     return this.iterator.next(answer)
   }
   /**
    * Create the iterator for the nodes
+   * @param input - The graph-like input.
    */
   private *createIterator (input: Input) {
     this.nextNodeId = input.root
 
     while (!this.end) {
-      this.currentNode = input.nodes.find((node: GraphNode) => this.nextNodeId === node.id) || null
-      if (!this.currentNode) {
+      const currentNode = input.nodes.find((node: GraphNode) => this.nextNodeId === node.id) || null
+      if (!currentNode) {
         throw new Error(`Node with id: ${this.nextNodeId} cannot be found.`)
       }
+
+      this.currentNode = currentNode
 
       // Find the nearest text/question, since we should not iterate through the other answers
       const nextNode = input.nodes.find((node: GraphNode) => node.id > this.nextNodeId && node.type !== 'answer') || null
