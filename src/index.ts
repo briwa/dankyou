@@ -17,11 +17,11 @@ export default class DankYou {
 
   /**
    * Get the next node
-   * @param answer - The answer to the next node. Only applies to question-type node for now.
+   * @param option - The option to the next node.
    * @returns The value of the next node and edges (if exists) in a form of `IteratorResult`
    */
-  public next (answer?: string): IteratorResult<CurrentNode> {
-    return this.iterable.next(answer)
+  public next (option?: string): IteratorResult<CurrentNode> {
+    return this.iterable.next(option)
   }
   /**
    * Create the iterator for the nodes
@@ -39,35 +39,24 @@ export default class DankYou {
 
       this.currentNode = currentNode
 
-      // Find the nearest text/question, since we should not iterate through the other answers
-      const nextNode = input.nodes.find((node) => node.id > this.pointer && node.type !== 'answer')
-      const nextEdges = this.currentNode.type === 'question' ? input.edges.filter((edge) => edge.from === this.pointer) : []
-      this.end = !nextNode
+      const nextEdges = input.edges.filter((edge) => edge.from === this.pointer)
+      this.end = nextEdges.length === 0
 
-      const answer: string | undefined = yield { node: this.currentNode, edges: nextEdges }
+      const option: undefined | string = yield { node: this.currentNode, edges: nextEdges }
 
-      switch (this.currentNode.type) {
-        case 'question': {
-          if (typeof answer === 'undefined') {
-            throw new Error('Empty answer is not allowed.')
-          }
-
-          const answerEdge = nextEdges.find((node: GraphEdge) => node.text === answer)
-          if (!answerEdge) {
-            throw new Error(`No answer found for id: ${this.pointer} and answer: ${answer}.`)
-          }
-
-          this.pointer = answerEdge.to
-
-          break
+      if (nextEdges.length > 1) {
+        if (typeof option === 'undefined') {
+          throw new Error('Empty option is not allowed.')
         }
-        default: {
-          if (nextNode) {
-            this.pointer = nextNode.id
-          }
 
-          break
+        const nextEdge = nextEdges.find((node: GraphEdge) => node.option === option)
+        if (!nextEdge) {
+          throw new Error(`No option found for id: ${this.pointer} and option: ${option}.`)
         }
+
+        this.pointer = nextEdge.to
+      } else if (nextEdges.length === 1) {
+        this.pointer = nextEdges[0].to
       }
     }
   }

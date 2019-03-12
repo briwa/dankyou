@@ -1,13 +1,12 @@
 export interface GraphNode {
   id: number
-  type: string
   text: string
 }
 
 export interface GraphEdge {
   from: number
   to: number
-  text: string
+  option?: void | string
 }
 
 export interface Input {
