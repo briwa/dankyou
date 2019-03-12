@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest --config jest.config.json",
     "test:ci": "jest --config jest.config.json --ci --coverage && cat ./coverage/lcov.info | coveralls",
-    "docs": "typedoc src",
+    "docs": "rimraf docs && typedoc src",
     "lint": "tslint --fix -p tsconfig.json",
     "build": "rimraf dist && tsc --build",
     "preversion": "npm run lint && npm run test",
