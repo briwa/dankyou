@@ -1,3 +1,8 @@
+export enum Direction {
+  PREV,
+  NEXT
+}
+
 export interface GraphNode {
   id: number
   text: string
@@ -6,7 +11,7 @@ export interface GraphNode {
 export interface GraphEdge {
   from: number
   to: number
-  option?: void | string
+  text?: void | string
 }
 
 export interface Input {
@@ -17,5 +22,8 @@ export interface Input {
 
 export interface CurrentNode {
   node: GraphNode
-  edges: GraphEdge[]
+  edges: {
+    next: GraphEdge[]
+    prev: GraphEdge[]
+  }
 }

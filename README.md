@@ -7,8 +7,6 @@
 Simple helper to iterate through a graph-like data structure. For now, the usage is focusing only on flowcharts.
 This is a work-in-progress project. It would still require a few things to be done before the first major version release.
 
-The name was shamefully stolen from a popular pop song. It was hard to come up with a proper name for this.
-
 ## Install
 ```bash
 npm install dankyou
@@ -20,39 +18,42 @@ Given this kind of input:
 const input = {
   root: 1,
   nodes: [
-    { id: 1, text: 'First', type: 'text' },
-    { id: 2, text: 'Second', type: 'text' },
-    { id: 3, text: 'Third?', type: 'question' },
-    { id: 4, text: 'You said No', type: 'answer' },
-    { id: 5, text: 'You said Yes', type: 'answer' },
-    { id: 6, text: 'Very well, bye', type: 'text' }
+    { id: 1, text: 'First' },
+    { id: 2, text: 'Yes or no?' },
+    { id: 3, text: 'You said No' },
+    { id: 4, text: 'You said Yes' },
+    { id: 5, text: 'Very well, bye' }
   ],
   edges: [
-    { from: 3, to: 4, text: 'No' },
-    { from: 3, to: 5, text: 'Yes' }
+    { from: 1, to: 2 },
+    { from: 2, to: 3, text: 'No' },
+    { from: 2, to: 4, text: 'Yes' },
+    { from: 3, to: 5 },
+    { from: 4, to: 5 }
   ]
 }
 ```
 
-It can iterate through the nodes. It is wrapping an iterator under the hood.
+You should be able to iterate through the input.
 ```javascript
 import DankYou from 'dankyou'
 const dankyou = new DankYou(input)
 
-dankyou.next()
-// { value: { node: { id: 1, text: 'First', type: 'text' }, edges: [] }, done: false }
+dankyou.next().value
+// { node: { id: 1, text: 'First' },
+//   edges: { prev: [], next: [{ from: 1, to: 2 }] } }
 
-dankyou.next()
-// { value: { node: { id: 2, text: 'Second', type: 'text' }, edges: [] }, done: false }
+dankyou.next().value
+// { node: { id: 2, text: 'Yes or no?' },
+//   edges: { prev: [{ from: 1, to: 2 }], next: [{ from: 2, to: 3, text: 'No' }, { from: 2, to: 4, text: 'Yes' }] } }
 
-dankyou.next()
-// { value: { node: { id: 3, text: 'Third?', type: 'question' }, edges: [{ from: 3, to: 4, text: 'No' }, { from: 3, to: 5, text: 'Yes' }] }, done: false }
+dankyou.next(4).value
+// { node: { id: 4, text: 'You said Yes' },
+//   edges: { prev: [{ from: 2, to: 4, text: 'Yes' }], next: [{ from: 4, to: 5 }] } }
 
-dankyou.next('Yes')
-// { value: { node: { id: 5, text: 'You said Yes', type: 'answer' }, edges: [] }, done: false }
-
-dankyou.next()
-// { value: { node: { id: 1, text: 'Very well, bye', type: 'text' }, edges: [] }, done: true }
+dankyou.next().value
+// { node: { id: 5, text: 'Very well, bye' },
+//   edges: { prev: [{ from: 4, to: 5 }], next: [] } }
 ```
 
 ## Test

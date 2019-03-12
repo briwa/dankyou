@@ -1,6 +1,7 @@
 import DankYou from '../src/index'
+import { Input } from '../src/types'
 
-function getInput (root: number) {
+function getInput (root: number): Input {
   return {
     root,
     nodes: [
@@ -14,8 +15,8 @@ function getInput (root: number) {
     edges: [
       { from: 1, to: 2 },
       { from: 2, to: 3 },
-      { from: 3, to: 4, option: 'No' },
-      { from: 3, to: 5, option: 'Yes' },
+      { from: 3, to: 4, text: 'No' },
+      { from: 3, to: 5, text: 'Yes' },
       { from: 4, to: 6 },
       { from: 5, to: 6 }
     ]
@@ -23,35 +24,143 @@ function getInput (root: number) {
 }
 
 describe('DankYou', () => {
-  describe('When iterating with the answer Yes', () => {
+  describe('When iterating forward', () => {
     test('Should iterate properly', () => {
       const input = getInput(1)
       const dankyou = new DankYou(input)
 
-      expect(dankyou.next().value).toEqual({ node: input.nodes[0], edges: [input.edges[0]] })
-      expect(dankyou.next().value).toEqual({ node: input.nodes[1], edges: [input.edges[1]] })
-      expect(dankyou.next().value).toEqual({ node: input.nodes[2], edges: input.edges.filter(e => e.from === input.nodes[2].id) })
-      expect(dankyou.next('Yes').value).toEqual({ node: input.nodes[4], edges: [input.edges[5]] })
-      expect(dankyou.next().value).toEqual({ node: input.nodes[5], edges: [] })
-      expect(dankyou.next().value).toBe(undefined)
+      expect(dankyou.next()).toEqual({
+        value: {
+          node: input.nodes[0],
+          edges: {
+            prev: [],
+            next: [input.edges[0]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.next()).toEqual({
+        value: {
+          node: input.nodes[1],
+          edges: {
+            prev: [input.edges[0]],
+            next: [input.edges[1]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.next()).toEqual({
+        value: {
+          node: input.nodes[2],
+          edges: {
+            prev: [input.edges[1]],
+            next: [input.edges[2], input.edges[3]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.next(5)).toEqual({
+        value: {
+          node: input.nodes[4],
+          edges: {
+            prev: [input.edges[3]],
+            next: [input.edges[5]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.next()).toEqual({
+        value: {
+          node: input.nodes[5],
+          edges: {
+            prev: [input.edges[4], input.edges[5]],
+            next: []
+          }
+        },
+        done: false
+      })
+
+      // This is the end of the input, no more nodes
+      expect(dankyou.next()).toEqual({
+        value: undefined,
+        done: true
+      })
     })
   })
 
-  describe('When iterating with the answer No', () => {
+  describe('When iterating backward', () => {
     test('Should iterate properly', () => {
-      const input = getInput(1)
+      const input = getInput(6)
       const dankyou = new DankYou(input)
 
-      expect(dankyou.next().value).toEqual({ node: input.nodes[0], edges: [input.edges[0]] })
-      expect(dankyou.next().value).toEqual({ node: input.nodes[1], edges: [input.edges[1]] })
-      expect(dankyou.next().value).toEqual({ node: input.nodes[2], edges: input.edges.filter(e => e.from === input.nodes[2].id) })
-      expect(dankyou.next('No').value).toEqual({ node: input.nodes[3], edges: [input.edges[4]] })
-      expect(dankyou.next().value).toEqual({ node: input.nodes[5], edges: [] })
-      expect(dankyou.next().value).toBe(undefined)
+      expect(dankyou.prev()).toEqual({
+        value: {
+          node: input.nodes[5],
+          edges: {
+            prev: [input.edges[4], input.edges[5]],
+            next: []
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.prev(5)).toEqual({
+        value: {
+          node: input.nodes[4],
+          edges: {
+            prev: [input.edges[3]],
+            next: [input.edges[5]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.prev()).toEqual({
+        value: {
+          node: input.nodes[2],
+          edges: {
+            prev: [input.edges[1]],
+            next: [input.edges[2], input.edges[3]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.prev()).toEqual({
+        value: {
+          node: input.nodes[1],
+          edges: {
+            prev: [input.edges[0]],
+            next: [input.edges[1]]
+          }
+        },
+        done: false
+      })
+
+      expect(dankyou.prev()).toEqual({
+        value: {
+          node: input.nodes[0],
+          edges: {
+            prev: [],
+            next: [input.edges[0]]
+          }
+        },
+        done: false
+      })
+
+      // This is the end of the input, no more nodes
+      expect(dankyou.prev()).toEqual({
+        value: undefined,
+        done: true
+      })
     })
   })
 
-  describe('When answering with an invalid option to a node with multiple edges', () => {
+  describe('When answering with an invalid id to a node with multiple edges', () => {
     test('Should throw error', () => {
       const input = getInput(3)
       const dankyou = new DankYou(input)
@@ -60,12 +169,12 @@ describe('DankYou', () => {
       dankyou.next()
 
       expect(() => {
-        dankyou.next('Lul')
-      }).toThrowError('No option found for id: 3 and option: Lul.')
+        dankyou.next(99)
+      }).toThrowError('Node with id: 99 cannot be found.')
     })
   })
 
-  describe('When answering with an empty option to a node with multiple edges', () => {
+  describe('When answering with an empty id to a node with multiple edges', () => {
     test('Should also throw error', () => {
       const input = getInput(3)
       const dankyou = new DankYou(input)
@@ -75,7 +184,7 @@ describe('DankYou', () => {
 
       expect(() => {
         dankyou.next()
-      }).toThrowError('Empty option is not allowed.')
+      }).toThrowError('Id must be supplied for nodes with multiple edges.')
     })
   })
 
