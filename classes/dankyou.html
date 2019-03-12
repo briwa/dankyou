@@ -91,13 +91,17 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="dankyou.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#currentnode" class="tsd-kind-icon">current<wbr>Node</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#direction" class="tsd-kind-icon">direction</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#end" class="tsd-kind-icon">end</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="dankyou.html#input" class="tsd-kind-icon">input</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#iterable" class="tsd-kind-icon">iterable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#nextedges" class="tsd-kind-icon">next<wbr>Edges</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#pointer" class="tsd-kind-icon">pointer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#prevedges" class="tsd-kind-icon">prev<wbr>Edges</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -105,6 +109,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="dankyou.html#createiterator" class="tsd-kind-icon">create<wbr>Iterator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="dankyou.html#next" class="tsd-kind-icon">next</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="dankyou.html#prev" class="tsd-kind-icon">prev</a></li>
 							</ul>
 						</section>
 					</div>
@@ -122,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L6">index.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L13">index.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -136,7 +141,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="currentnode" class="tsd-anchor"></a>
@@ -144,7 +149,17 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Node<span class="tsd-signature-symbol">:</span> <a href="../interfaces/graphnode.html" class="tsd-signature-type">GraphNode</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L13">index.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L8">index.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="direction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> direction</h3>
+					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="../enums/direction.html" class="tsd-signature-type">Direction</a><span class="tsd-signature-symbol"> =&nbsp;Direction.NEXT</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L12">index.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,7 +169,17 @@
 					<div class="tsd-signature tsd-kind-icon">end<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L16">index.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L13">index.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="input" class="tsd-anchor"></a>
+					<h3>input</h3>
+					<div class="tsd-signature tsd-kind-icon">input<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.html" class="tsd-signature-type">Input</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L15">index.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +189,17 @@
 					<div class="tsd-signature tsd-kind-icon">iterable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Iterator</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/currentnode.html" class="tsd-signature-type">CurrentNode</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L14">index.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L7">index.ts:7</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="nextedges" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> next<wbr>Edges</h3>
+					<div class="tsd-signature tsd-kind-icon">next<wbr>Edges<span class="tsd-signature-symbol">:</span> <a href="../interfaces/graphedge.html" class="tsd-signature-type">GraphEdge</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L9">index.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,7 +209,17 @@
 					<div class="tsd-signature tsd-kind-icon">pointer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L15">index.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L11">index.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="prevedges" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> prev<wbr>Edges</h3>
+					<div class="tsd-signature tsd-kind-icon">prev<wbr>Edges<span class="tsd-signature-symbol">:</span> <a href="../interfaces/graphedge.html" class="tsd-signature-type">GraphEdge</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L10">index.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,7 +236,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L31">index.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L44">index.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,7 +245,7 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>yields</dt>
-									<dd><p>The next node and edges, if any</p>
+									<dd><p>The node and edges, if any</p>
 									</dd>
 								</dl>
 							</div>
@@ -209,7 +254,7 @@
 								<li>
 									<h5>input: <a href="../interfaces/input.html" class="tsd-signature-type">Input</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The graph-like input.</p>
+										<p>The graph-like input</p>
 									</div>
 								</li>
 							</ul>
@@ -221,13 +266,13 @@
 					<a name="next" class="tsd-anchor"></a>
 					<h3>next</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">(</span>answer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/currentnode.html" class="tsd-signature-type">CurrentNode</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/currentnode.html" class="tsd-signature-type">CurrentNode</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/3efcc7f/src/index.ts#L23">index.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L26">index.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -238,14 +283,46 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> answer: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The answer to the next node. Only applies to question-type node for now.</p>
+										<p>The id to the next node, if applicable</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/currentnode.html" class="tsd-signature-type">CurrentNode</a><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>The value of the next node and edges (if exists) in a form of <code>IteratorResult</code></p>
+							<p>The next node and edges</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="prev" class="tsd-anchor"></a>
+					<h3>prev</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">prev<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/currentnode.html" class="tsd-signature-type">CurrentNode</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/briwa/dankyou/blob/b8220dc/src/index.ts#L35">index.ts:35</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the previous node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The id to the previous node, if applicable</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IteratorResult</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/currentnode.html" class="tsd-signature-type">CurrentNode</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The previous node and edges</p>
 						</li>
 					</ul>
 				</section>
@@ -261,6 +338,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="../enums/direction.html" class="tsd-kind-icon">Direction</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -273,19 +353,34 @@
 								<a href="dankyou.html#currentnode" class="tsd-kind-icon">current<wbr>Node</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="dankyou.html#direction" class="tsd-kind-icon">direction</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="dankyou.html#end" class="tsd-kind-icon">end</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="dankyou.html#input" class="tsd-kind-icon">input</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="dankyou.html#iterable" class="tsd-kind-icon">iterable</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="dankyou.html#nextedges" class="tsd-kind-icon">next<wbr>Edges</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="dankyou.html#pointer" class="tsd-kind-icon">pointer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="dankyou.html#prevedges" class="tsd-kind-icon">prev<wbr>Edges</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="dankyou.html#createiterator" class="tsd-kind-icon">create<wbr>Iterator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="dankyou.html#next" class="tsd-kind-icon">next</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="dankyou.html#prev" class="tsd-kind-icon">prev</a>
 							</li>
 						</ul>
 					</li>

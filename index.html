@@ -70,7 +70,6 @@
 				<a href="https://coveralls.io/github/briwa/dankyou?branch=master"><img src="https://coveralls.io/repos/github/briwa/dankyou/badge.svg?branch=master" alt="Coverage Status"></a></p>
 				<p>Simple helper to iterate through a graph-like data structure. For now, the usage is focusing only on flowcharts.
 				This is a work-in-progress project. It would still require a few things to be done before the first major version release.</p>
-				<p>The name was shamefully stolen from a popular pop song. It was hard to come up with a proper name for this.</p>
 				<h2 id="install">Install</h2>
 				<pre><code class="language-bash">npm install dankyou</code></pre>
 				<h2 id="usage">Usage</h2>
@@ -78,36 +77,39 @@
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> input = {
   <span class="hljs-attr">root</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">nodes</span>: [
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'First'</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Second'</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Third?'</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">'question'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'You said No'</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">'answer'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'You said Yes'</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">'answer'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">6</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Very well, bye'</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span> }
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'First'</span> },
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes or no?'</span> },
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'You said No'</span> },
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'You said Yes'</span> },
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Very well, bye'</span> }
   ],
   <span class="hljs-attr">edges</span>: [
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'No'</span> },
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes'</span> }
+    { <span class="hljs-attr">from</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">2</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'No'</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes'</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">5</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">5</span> }
   ]
 }</code></pre>
-				<p>It can iterate through the nodes. It is wrapping an iterator under the hood.</p>
+				<p>You should be able to iterate through the input.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> DankYou <span class="hljs-keyword">from</span> <span class="hljs-string">'dankyou'</span>
 <span class="hljs-keyword">const</span> dankyou = <span class="hljs-keyword">new</span> DankYou(input)
 
-dankyou.next()
-<span class="hljs-comment">// { value: { id: 1, text: 'First', type: 'text' }, done: false }</span>
+dankyou.next().value
+<span class="hljs-comment">// { node: { id: 1, text: 'First' },</span>
+<span class="hljs-comment">//   edges: { prev: [], next: [{ from: 1, to: 2 }] } }</span>
 
-dankyou.next()
-<span class="hljs-comment">// { value: { id: 2, text: 'Second', type: 'text' }, done: false }</span>
+dankyou.next().value
+<span class="hljs-comment">// { node: { id: 2, text: 'Yes or no?' },</span>
+<span class="hljs-comment">//   edges: { prev: [{ from: 1, to: 2 }], next: [{ from: 2, to: 3, text: 'No' }, { from: 2, to: 4, text: 'Yes' }] } }</span>
 
-dankyou.next()
-<span class="hljs-comment">// { value: { id: 3, text: 'Third?', type: 'question' }, done: false }</span>
+dankyou.next(<span class="hljs-number">4</span>).value
+<span class="hljs-comment">// { node: { id: 4, text: 'You said Yes' },</span>
+<span class="hljs-comment">//   edges: { prev: [{ from: 2, to: 4, text: 'Yes' }], next: [{ from: 4, to: 5 }] } }</span>
 
-dankyou.next(<span class="hljs-string">'Yes'</span>)
-<span class="hljs-comment">// { value: { id: 5, text: 'You said Yes', type: 'answer' }, done: false }</span>
-
-dankyou.next()
-<span class="hljs-comment">// { value: { id: 6, text: 'Very well, bye', type: 'text' }, done: true }</span></code></pre>
+dankyou.next().value
+<span class="hljs-comment">// { node: { id: 5, text: 'Very well, bye' },</span>
+<span class="hljs-comment">//   edges: { prev: [{ from: 4, to: 5 }], next: [] } }</span></code></pre>
 				<h2 id="test">Test</h2>
 				<pre><code class="language-bash">npm run <span class="hljs-built_in">test</span></code></pre>
 				<h2 id="build">Build</h2>
@@ -126,6 +128,9 @@ dankyou.next()
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/direction.html" class="tsd-kind-icon">Direction</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/dankyou.html" class="tsd-kind-icon">Dank<wbr>You</a>
 					</li>
