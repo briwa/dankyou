@@ -8,7 +8,7 @@ export default class DankYou {
   private currentNode!: GraphNode
   private nextEdges!: GraphEdge[]
   private prevEdges!: GraphEdge[]
-  private pointer: number = 0
+  private pointer!: number | string
   private direction: Direction = Direction.NEXT
   private end: boolean = false
 
