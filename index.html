@@ -76,19 +76,19 @@
 				<p>Given this kind of input:</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> input = {
   <span class="hljs-attr">root</span>: <span class="hljs-number">1</span>,
-  <span class="hljs-attr">nodes</span>: [
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'First'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes or no?'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'You said No'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'You said Yes'</span> },
-    { <span class="hljs-attr">id</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Very well, bye'</span> }
-  ],
+  <span class="hljs-attr">nodes</span>: {
+    <span class="hljs-string">'1'</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">'First'</span> },
+    <span class="hljs-string">'2'</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes or no?'</span> },
+    <span class="hljs-string">'3'</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">'You said No'</span> },
+    <span class="hljs-string">'4'</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">'You said Yes'</span> },
+    <span class="hljs-string">'5'</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">'Very well, bye'</span> }
+  },
   <span class="hljs-attr">edges</span>: [
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">2</span> },
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'No'</span> },
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes'</span> },
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">5</span> },
-    { <span class="hljs-attr">from</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">to</span>: <span class="hljs-number">5</span> }
+    { <span class="hljs-attr">from</span>: <span class="hljs-string">'1'</span>, <span class="hljs-attr">to</span>: <span class="hljs-string">'2'</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-string">'2'</span>, <span class="hljs-attr">to</span>: <span class="hljs-string">'3'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'No'</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-string">'2'</span>, <span class="hljs-attr">to</span>: <span class="hljs-string">'4'</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'Yes'</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-string">'3'</span>, <span class="hljs-attr">to</span>: <span class="hljs-string">'5'</span> },
+    { <span class="hljs-attr">from</span>: <span class="hljs-string">'4'</span>, <span class="hljs-attr">to</span>: <span class="hljs-string">'5'</span> }
   ]
 }</code></pre>
 				<p>You should be able to iterate through the input.</p>
@@ -96,20 +96,24 @@
 <span class="hljs-keyword">const</span> dankyou = <span class="hljs-keyword">new</span> DankYou(input)
 
 dankyou.next().value
-<span class="hljs-comment">// { node: { id: 1, text: 'First' },</span>
-<span class="hljs-comment">//   edges: { prev: [], next: [{ from: 1, to: 2 }] } }</span>
+<span class="hljs-comment">// { id: '1',</span>
+<span class="hljs-comment">//   node: { text: 'First' },</span>
+<span class="hljs-comment">//   edges: { prev: [], next: [{ from: '1', to: '2' }] } }</span>
 
 dankyou.next().value
-<span class="hljs-comment">// { node: { id: 2, text: 'Yes or no?' },</span>
-<span class="hljs-comment">//   edges: { prev: [{ from: 1, to: 2 }], next: [{ from: 2, to: 3, text: 'No' }, { from: 2, to: 4, text: 'Yes' }] } }</span>
+<span class="hljs-comment">// { id: '2',</span>
+<span class="hljs-comment">//   node: { text: 'Yes or no?' },</span>
+<span class="hljs-comment">//   edges: { prev: [{ from: '1', to: '2' }], next: [{ from: '2', to: '3', text: 'No' }, { from: '2', to: '4', text: 'Yes' }] } }</span>
 
 dankyou.next(<span class="hljs-number">4</span>).value
-<span class="hljs-comment">// { node: { id: 4, text: 'You said Yes' },</span>
-<span class="hljs-comment">//   edges: { prev: [{ from: 2, to: 4, text: 'Yes' }], next: [{ from: 4, to: 5 }] } }</span>
+<span class="hljs-comment">// { id: '4',</span>
+<span class="hljs-comment">//   node: { text: 'You said Yes' },</span>
+<span class="hljs-comment">//   edges: { prev: [{ from: '2', to: '4', text: 'Yes' }], next: [{ from: '4', to: '5' }] } }</span>
 
 dankyou.next().value
-<span class="hljs-comment">// { node: { id: 5, text: 'Very well, bye' },</span>
-<span class="hljs-comment">//   edges: { prev: [{ from: 4, to: 5 }], next: [] } }</span></code></pre>
+<span class="hljs-comment">// { id: '5',</span>
+<span class="hljs-comment">//   node: { text: 'Very well, bye' },</span>
+<span class="hljs-comment">//   edges: { prev: [{ from: '4', to: '5' }], next: [] } }</span></code></pre>
 				<h2 id="test">Test</h2>
 				<pre><code class="language-bash">npm run <span class="hljs-built_in">test</span></code></pre>
 				<h2 id="build">Build</h2>
