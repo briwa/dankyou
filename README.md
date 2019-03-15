@@ -17,19 +17,19 @@ Given this kind of input:
 ```javascript
 const input = {
   root: 1,
-  nodes: [
-    { id: 1, text: 'First' },
-    { id: 2, text: 'Yes or no?' },
-    { id: 3, text: 'You said No' },
-    { id: 4, text: 'You said Yes' },
-    { id: 5, text: 'Very well, bye' }
-  ],
+  nodes: {
+    '1': { text: 'First' },
+    '2': { text: 'Yes or no?' },
+    '3': { text: 'You said No' },
+    '4': { text: 'You said Yes' },
+    '5': { text: 'Very well, bye' }
+  },
   edges: [
-    { from: 1, to: 2 },
-    { from: 2, to: 3, text: 'No' },
-    { from: 2, to: 4, text: 'Yes' },
-    { from: 3, to: 5 },
-    { from: 4, to: 5 }
+    { from: '1', to: '2' },
+    { from: '2', to: '3', text: 'No' },
+    { from: '2', to: '4', text: 'Yes' },
+    { from: '3', to: '5' },
+    { from: '4', to: '5' }
   ]
 }
 ```
@@ -40,20 +40,24 @@ import DankYou from 'dankyou'
 const dankyou = new DankYou(input)
 
 dankyou.next().value
-// { node: { id: 1, text: 'First' },
-//   edges: { prev: [], next: [{ from: 1, to: 2 }] } }
+// { id: '1',
+//   node: { text: 'First' },
+//   edges: { prev: [], next: [{ from: '1', to: '2' }] } }
 
 dankyou.next().value
-// { node: { id: 2, text: 'Yes or no?' },
-//   edges: { prev: [{ from: 1, to: 2 }], next: [{ from: 2, to: 3, text: 'No' }, { from: 2, to: 4, text: 'Yes' }] } }
+// { id: '2',
+//   node: { text: 'Yes or no?' },
+//   edges: { prev: [{ from: '1', to: '2' }], next: [{ from: '2', to: '3', text: 'No' }, { from: '2', to: '4', text: 'Yes' }] } }
 
 dankyou.next(4).value
-// { node: { id: 4, text: 'You said Yes' },
-//   edges: { prev: [{ from: 2, to: 4, text: 'Yes' }], next: [{ from: 4, to: 5 }] } }
+// { id: '4',
+//   node: { text: 'You said Yes' },
+//   edges: { prev: [{ from: '2', to: '4', text: 'Yes' }], next: [{ from: '4', to: '5' }] } }
 
 dankyou.next().value
-// { node: { id: 5, text: 'Very well, bye' },
-//   edges: { prev: [{ from: 4, to: 5 }], next: [] } }
+// { id: '5',
+//   node: { text: 'Very well, bye' },
+//   edges: { prev: [{ from: '4', to: '5' }], next: [] } }
 ```
 
 ## Test

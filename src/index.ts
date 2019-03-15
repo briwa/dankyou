@@ -23,7 +23,7 @@ export default class DankYou {
    * @param id - The id to the next node, if applicable
    * @returns The next node and edges
    */
-  public next (id?: number): IteratorResult<CurrentNode> {
+  public next (id?: string): IteratorResult<CurrentNode> {
     this.direction = Direction.NEXT
     return this.iterable.next(id)
   }
@@ -32,7 +32,7 @@ export default class DankYou {
    * @param id - The id to the previous node, if applicable
    * @returns The previous node and edges
    */
-  public prev (id?: number): IteratorResult<CurrentNode> {
+  public prev (id?: string): IteratorResult<CurrentNode> {
     this.direction = Direction.PREV
     return this.iterable.next(id)
   }
@@ -45,7 +45,7 @@ export default class DankYou {
     this.pointer = input.root
 
     while (!this.end) {
-      const currentNode = input.nodes.find((node: GraphNode) => this.pointer === node.id)
+      const currentNode = input.nodes[this.pointer]
       if (!currentNode) {
         throw new Error(`Node with id: ${this.pointer} cannot be found.`)
       }
@@ -57,7 +57,8 @@ export default class DankYou {
       const edges = this.direction === Direction.PREV ? this.prevEdges : this.nextEdges
       this.end = edges.length === 0
 
-      const id: undefined | number = yield {
+      const nextId: undefined | string = yield {
+        id: this.pointer,
         node: this.currentNode,
         edges: {
           next: this.nextEdges,
@@ -66,11 +67,11 @@ export default class DankYou {
       }
 
       if (edges.length > 1) {
-        if (typeof id === 'undefined') {
+        if (typeof nextId === 'undefined') {
           throw new Error('Id must be supplied for nodes with multiple edges.')
         }
 
-        this.pointer = id
+        this.pointer = nextId
       } else if (edges.length === 1) {
         this.pointer = this.direction === Direction.PREV ? edges[0].from : edges[0].to
       }

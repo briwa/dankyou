@@ -4,23 +4,23 @@ export enum Direction {
 }
 
 export interface GraphNode {
-  id: number | string
   text: string
 }
 
 export interface GraphEdge {
-  from: number | string
-  to: number | string
+  from: string
+  to: string
   text?: void | string
 }
 
 export interface Input {
-  root: number | string
-  nodes: GraphNode[]
+  root: string
+  nodes: Record<string, GraphNode>
   edges: GraphEdge[]
 }
 
 export interface CurrentNode {
+  id: string
   node: GraphNode
   edges: {
     next: GraphEdge[]
