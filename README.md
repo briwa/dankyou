@@ -18,18 +18,18 @@ Given this kind of input:
 const input = {
   root: 1,
   nodes: {
-    '1': { text: 'First' },
-    '2': { text: 'Yes or no?' },
-    '3': { text: 'You said No' },
-    '4': { text: 'You said Yes' },
-    '5': { text: 'Very well, bye' }
+    a: { text: 'First' },
+    b: { text: 'Yes or no?' },
+    c: { text: 'You said No' },
+    d: { text: 'You said Yes' },
+    e: { text: 'Very well, bye' }
   },
   edges: [
-    { from: '1', to: '2' },
-    { from: '2', to: '3', text: 'No' },
-    { from: '2', to: '4', text: 'Yes' },
-    { from: '3', to: '5' },
-    { from: '4', to: '5' }
+    { from: 'a', to: 'b' },
+    { from: 'b', to: 'c', text: 'No' },
+    { from: 'b', to: 'd', text: 'Yes' },
+    { from: 'c', to: 'e' },
+    { from: 'd', to: 'e' }
   ]
 }
 ```
@@ -40,24 +40,24 @@ import DankYou from 'dankyou'
 const dankyou = new DankYou(input)
 
 dankyou.next().value
-// { id: '1',
+// { id: 'a',
 //   node: { text: 'First' },
-//   edges: { prev: [], next: [{ from: '1', to: '2' }] } }
+//   edges: { prev: [], next: [{ from: 'a', to: 'b' }] } }
 
 dankyou.next().value
-// { id: '2',
+// { id: 'b',
 //   node: { text: 'Yes or no?' },
-//   edges: { prev: [{ from: '1', to: '2' }], next: [{ from: '2', to: '3', text: 'No' }, { from: '2', to: '4', text: 'Yes' }] } }
+//   edges: { prev: [{ from: 'a', to: 'b' }], next: [{ from: 'b', to: 'c', text: 'No' }, { from: 'b', to: 'd', text: 'Yes' }] } }
 
 dankyou.next(4).value
-// { id: '4',
+// { id: 'd',
 //   node: { text: 'You said Yes' },
-//   edges: { prev: [{ from: '2', to: '4', text: 'Yes' }], next: [{ from: '4', to: '5' }] } }
+//   edges: { prev: [{ from: 'b', to: 'd', text: 'Yes' }], next: [{ from: 'd', to: 'e' }] } }
 
 dankyou.next().value
-// { id: '5',
+// { id: 'e',
 //   node: { text: 'Very well, bye' },
-//   edges: { prev: [{ from: '4', to: '5' }], next: [] } }
+//   edges: { prev: [{ from: 'd', to: 'e' }], next: [] } }
 ```
 
 ## Test

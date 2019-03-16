@@ -5,20 +5,20 @@ function getInput (root: string): Input {
   return {
     root,
     nodes: {
-      '1': { text: 'First' },
-      '2': { text: 'Second' },
-      '3': { text: 'Third?' },
-      '4': { text: 'You said No' },
-      '5': { text: 'You said Yes' },
-      '6': { text: 'Very well, bye' }
+      a: { text: 'First' },
+      b: { text: 'Second' },
+      c: { text: 'Third?' },
+      d: { text: 'You said No' },
+      e: { text: 'You said Yes' },
+      f: { text: 'Very well, bye' }
     },
     edges: [
-      { from: '1', to: '2' },
-      { from: '2', to: '3' },
-      { from: '3', to: '4', text: 'No' },
-      { from: '3', to: '5', text: 'Yes' },
-      { from: '4', to: '6' },
-      { from: '5', to: '6' }
+      { from: 'a', to: 'b' },
+      { from: 'b', to: 'c' },
+      { from: 'c', to: 'd', text: 'No' },
+      { from: 'c', to: 'e', text: 'Yes' },
+      { from: 'd', to: 'f' },
+      { from: 'e', to: 'f' }
     ]
   }
 }
@@ -26,13 +26,13 @@ function getInput (root: string): Input {
 describe('DankYou', () => {
   describe('When iterating forward', () => {
     test('Should iterate properly', () => {
-      const input = getInput('1')
+      const input = getInput('a')
       const dankyou = new DankYou(input)
 
       expect(dankyou.next()).toEqual({
         value: {
-          id: '1',
-          node: input.nodes['1'],
+          id: 'a',
+          node: input.nodes.a,
           edges: {
             prev: [],
             next: [input.edges[0]]
@@ -43,8 +43,8 @@ describe('DankYou', () => {
 
       expect(dankyou.next()).toEqual({
         value: {
-          id: '2',
-          node: input.nodes['2'],
+          id: 'b',
+          node: input.nodes.b,
           edges: {
             prev: [input.edges[0]],
             next: [input.edges[1]]
@@ -55,8 +55,8 @@ describe('DankYou', () => {
 
       expect(dankyou.next()).toEqual({
         value: {
-          id: '3',
-          node: input.nodes['3'],
+          id: 'c',
+          node: input.nodes.c,
           edges: {
             prev: [input.edges[1]],
             next: [input.edges[2], input.edges[3]]
@@ -65,10 +65,10 @@ describe('DankYou', () => {
         done: false
       })
 
-      expect(dankyou.next('5')).toEqual({
+      expect(dankyou.next('e')).toEqual({
         value: {
-          id: '5',
-          node: input.nodes['5'],
+          id: 'e',
+          node: input.nodes.e,
           edges: {
             prev: [input.edges[3]],
             next: [input.edges[5]]
@@ -79,8 +79,8 @@ describe('DankYou', () => {
 
       expect(dankyou.next()).toEqual({
         value: {
-          id: '6',
-          node: input.nodes['6'],
+          id: 'f',
+          node: input.nodes.f,
           edges: {
             prev: [input.edges[4], input.edges[5]],
             next: []
@@ -99,13 +99,13 @@ describe('DankYou', () => {
 
   describe('When iterating backward', () => {
     test('Should iterate properly', () => {
-      const input = getInput('6')
+      const input = getInput('f')
       const dankyou = new DankYou(input)
 
       expect(dankyou.prev()).toEqual({
         value: {
-          id: '6',
-          node: input.nodes['6'],
+          id: 'f',
+          node: input.nodes.f,
           edges: {
             prev: [input.edges[4], input.edges[5]],
             next: []
@@ -114,10 +114,10 @@ describe('DankYou', () => {
         done: false
       })
 
-      expect(dankyou.prev('5')).toEqual({
+      expect(dankyou.prev('e')).toEqual({
         value: {
-          id: '5',
-          node: input.nodes['5'],
+          id: 'e',
+          node: input.nodes.e,
           edges: {
             prev: [input.edges[3]],
             next: [input.edges[5]]
@@ -128,8 +128,8 @@ describe('DankYou', () => {
 
       expect(dankyou.prev()).toEqual({
         value: {
-          id: '3',
-          node: input.nodes['3'],
+          id: 'c',
+          node: input.nodes.c,
           edges: {
             prev: [input.edges[1]],
             next: [input.edges[2], input.edges[3]]
@@ -140,8 +140,8 @@ describe('DankYou', () => {
 
       expect(dankyou.prev()).toEqual({
         value: {
-          id: '2',
-          node: input.nodes['2'],
+          id: 'b',
+          node: input.nodes.b,
           edges: {
             prev: [input.edges[0]],
             next: [input.edges[1]]
@@ -152,8 +152,8 @@ describe('DankYou', () => {
 
       expect(dankyou.prev()).toEqual({
         value: {
-          id: '1',
-          node: input.nodes['1'],
+          id: 'a',
+          node: input.nodes.a,
           edges: {
             prev: [],
             next: [input.edges[0]]
@@ -172,21 +172,21 @@ describe('DankYou', () => {
 
   describe('When answering with an invalid id to a node with multiple edges', () => {
     test('Should throw error', () => {
-      const input = getInput('3')
+      const input = getInput('c')
       const dankyou = new DankYou(input)
 
       // Initiate the first node regardless
       dankyou.next()
 
       expect(() => {
-        dankyou.next('99')
-      }).toThrowError('Node with id: 99 cannot be found.')
+        dankyou.next('xxx')
+      }).toThrowError('Node with id: xxx cannot be found.')
     })
   })
 
   describe('When answering with an empty id to a node with multiple edges', () => {
     test('Should also throw error', () => {
-      const input = getInput('3')
+      const input = getInput('c')
       const dankyou = new DankYou(input)
 
       // Initiate the first node regardless
@@ -200,12 +200,12 @@ describe('DankYou', () => {
 
   describe('When no node is found', () => {
     test('Should throw error', () => {
-      const input = getInput('9')
+      const input = getInput('x')
       const dankyou = new DankYou(input)
 
       expect(() => {
         dankyou.next()
-      }).toThrowError('Node with id: 9 cannot be found.')
+      }).toThrowError('Node with id: x cannot be found.')
     })
   })
 })
